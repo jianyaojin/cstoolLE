@@ -1,0 +1,9 @@
+build
+dev_files
+data/materials/scripts
+data/materials/*.mat
+cstool.egg-info
+*Zone.Identifier*
+__pycache__/
+*.py[cod]
+*$py.class
