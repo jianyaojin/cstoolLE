@@ -1,4 +1,6 @@
 import cstool as cst
+import numpy as np
+import argparse
 from cstool.input_data import param_file
 from cstool.mott import mott_dimfp
 from cstool.phonon import ac_phonon_dimfp, ac_phonon_loss
@@ -11,13 +13,37 @@ from cstool.dielectric_function import (
 	elf_full_penn, compile_full_imfp_icdf)
 from cstool.endf import compile_electronionization_icdf, compile_photoionization_icdf
 
-import numpy as np
-import argparse
+"""
+Cross Section tool (cstool) calculates scattering cross sections for different materials from a 
+.yaml file. It produces a .mat file that can be inserted into the nebula simulator for electron
+matter simulations.
 
-
-
+All physics models calculate their key scattering parameters here, to be written to .mat files.
+"""
 
 def compile_kieft_elastic(outfile, material_params, K, P):
+	"""
+	Calculates, tabulates and writes elastic cross sections, inverse cumulative distribution
+	function and transport lengths into a .mat file. Function interpolates between two models: 
+	Electron acoustic-phonon interaction model and Mott cross sections calculated via ELSEPA. 
+
+	Parameters
+	----------
+	outfile : datafile class object 
+		cstool unique class with h5py functionality + the addition of pint (a units package) units
+		for quantities
+	material_params : param_file class object
+		file that stores data from .yaml material file
+	K : array (should be geomspace)
+		electron energies to calculate tables for. Nebula tends to complain if the energies
+		aren't spaced logarithmically.
+	P : array
+		probabilities to evaluate the icdf at
+
+	Returns
+	-------
+	None (imfp, icdf and transport length written directly into outfile) 
+	"""
 	print("# Computing Mott cross-sections using ELSEPA.")
 	mott_fn = mott_dimfp(material_params, K[K>10*units.eV], threads=4)
 
@@ -56,6 +82,26 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 
 
 def compile_kieft_inelastic(outfile, material_params, K, P):
+	"""
+	Calculates, tabulates and writes elastic cross sections and inverse cumulative distribution
+	function into a .mat file. This approach is based on that of Ashley (1988). This is not the
+	default inelastic method for Nebula.
+
+	Parameters
+	----------
+	outfile : datafile class object 
+		cstool custom data storage class
+	material_params : param_file class object
+		file that stores data from .yaml material file
+	K : array (should be geomspace)
+		eelectron energies to calculate tables for
+	P : array
+		probabilities to evaluate the icdf at
+
+	Returns
+	-------
+	None (imfp and icdf written directly into outfile) 
+	"""
 	print("# Computing inelastic-Kieft total cross-sections and iCDFs.")
 
 	imfp, icdf = compile_ashley_imfp_icdf(
@@ -68,6 +114,25 @@ def compile_kieft_inelastic(outfile, material_params, K, P):
 	group.add_dataset("w0_icdf", icdf, ("energy", None), 'eV')
 
 def compile_kieft_ionization(outfile, material_params, E, P):
+	"""
+	Compiles photoionization icdf dataset for the kieft inelastic model. Used for sampling the 
+	shell involved in inelastic scattering. Based on Ashley's model.
+
+	Parameters
+	----------
+	outfile : datafile class object 
+		cstool custom data storage class
+	material_params : param_file class object
+		file that stores data from .yaml material file
+	E : array (should be geomspace)
+		electron energies to calculate tables for
+	P : array
+		probabilities to evaluate the icdf at
+
+	Returns
+	-------
+	None (imfp and icdf written directly into outfile) 
+	"""
 	print("# Computing Kieft ionization energy probabilities")
 	icdf = compile_photoionization_icdf(material_params, E, P)
 
@@ -79,6 +144,32 @@ def compile_kieft_ionization(outfile, material_params, E, P):
 
 def compile_full_penn(outfile, material_params,
 	K, P_omega, n_omega_q, P_q):
+	"""
+	Compiles and writes imfp, stopping power, energy loss and momentum loss tables to file.
+
+	Parameters
+	----------
+	outfile : datafile class object 
+		cstool custom data storage class
+	material_params : param_file class object
+		file that stores data from .yaml material file
+	K : array like
+		electron energies to calculate tables for
+	P_omega : array like
+		probability grid to evaluate energy loss probabilities at (e.g. this amount of energy
+		loss has this probability to occur)
+	n_omega_q : float
+		resolution of the omega-q lookup table. Omega is related to q, so each q_icdf table is 
+		associated with a value for omega. The earlier sampled value for omega is used to choose
+		which q_icdf to sample from to obtain q. This parameter controls the number of said
+		q_icdf tables.
+	P_q : array like
+		probability grid to evaluate momentum loss probabilities at.
+
+	Returns
+	-------
+	None (all quantities written to outfile)
+	"""
 
 	# Compute ELF
 	omega, q, elf = elf_full_penn(material_params, K[-1], 1200, 1000)
@@ -98,6 +189,28 @@ def compile_full_penn(outfile, material_params,
 
 def compile_ionization(outfile, material_params,
 	K, E_frac, P):
+	"""
+	Calculates and writes icdf tables for electron shells. These later determine if the excitation
+	is inner-shell or valence.
+
+	Parameters
+	----------
+	outfile : datafile class object 
+		cstool custom data storage class
+	material_params : param_file class object
+		file that stores data from .yaml material file
+	K : array like
+		Electron energies to calculate tables for.
+	E_frac : array like
+		Array of the fractions omega/K. Multiply each array value by K to obtain the omega table.
+		Given a previously sampled omega this then can be used to choose a binding_icdf table, since
+		there is one binding_icdf table per omega.
+	P : array like
+		Probabilities to evaluate icdfs at.
+	Returns
+	-------
+	None (Written to outfile)
+	"""
 	print("# Computing ionization energy probabilities")
 
 	icdf = compile_electronionization_icdf(material_params, K, E_frac, P)
