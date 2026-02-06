@@ -66,6 +66,8 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 		imfp[i] = 2*np.pi * _imfp
 		icdf[i,:] = _icdf
 
+		# 2pi from integral over solid angle (dOmega = sintheta dtheta dphi)
+		# integral from -1 to 1 because change of variables which also absorbs the sin term
 		_itl = 2 * np.pi * compute_tcs(
 			lambda costheta : elastic_cs_fn(E, costheta) * (1 - costheta),
 			np.linspace(-1, 1, 100000))
