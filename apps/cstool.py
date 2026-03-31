@@ -21,7 +21,7 @@ matter simulations.
 All physics models calculate their key scattering parameters here, to be written to .mat files.
 """
 
-def compile_kieft_elastic(outfile, material_params, K, P):
+def compile_kieft_elastic(outfile, material_params, K, P, separate=False):
 	"""
 	Calculates, tabulates and writes elastic cross sections, inverse cumulative distribution
 	function and transport lengths into a .mat file. Function interpolates between two models: 
@@ -39,6 +39,10 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 		aren't spaced logarithmically.
 	P : array
 		probabilities to evaluate the icdf at
+	separate : bool
+		whether or not to write the phonon and Mott scattering imfps separately to the .mat file
+		as well. WARNING: In the current implementation, this is only to check the MFPs; the 
+		updated elastic costhetas are NOT written to file.   
 
 	Returns
 	-------
@@ -53,18 +57,54 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 			lambda E: mott_fn(E, costheta),
 			100*units.eV, 200*units.eV
 		)(E)
+	
+	def phonon_cs_fn(E, costheta):
+		return ac_phonon_dimfp(material_params)(E, costheta)
+	
+	def mott_cs_fn(E, costheta):
+		return mott_fn(E, costheta)
 
 	print("# Computing elastic total cross-sections and iCDFs.")
+	# Create container for imfp icdf and tl
 	imfp = np.zeros(K.shape) * units('nm^-1')
 	icdf = np.zeros((K.shape[0], P.shape[0])) * units.dimensionless
 	tl = np.zeros(K.shape) * units.nm
+
+	# Optionally create containers for phonon and Mott MFPs
+	if separate:
+		phonon_imfp = np.zeros(K.shape) * units('nm^-1')
+		phonon_icdf = np.zeros((K.shape[0], P.shape[0])) * units.dimensionless
+
+		mott_imfp = np.zeros(K.shape) * units('nm^-1')
+		mott_icdf = np.zeros((K.shape[0], P.shape[0])) * units.dimensionless
+
 	for i, E in enumerate(K):
 		_imfp, _icdf = compute_tcs_icdf(
 			lambda costheta : elastic_cs_fn(E, costheta),
 			P,
-			np.linspace(-1, 1, 100000))
+			np.linspace(-1, 1, 100000)
+		)
 		imfp[i] = 2*np.pi * _imfp
 		icdf[i,:] = _icdf
+		# cos_theta = np.linspace(-1, 1, 100000) * units.dimensionless
+		# phonon_costheta[i,:] = phonon_cs_fn(E,cos_theta).magnitude * units.dimensionless
+		# mott_costheta[i,:] = mott_cs_fn(E,cos_theta).magnitude * units.dimensionless
+
+		# Calculate the phonon and mott cross sections separately, if required
+		if separate:
+			_phonon_imfp, _phonon_icdf = compute_tcs_icdf(
+				lambda costheta : phonon_cs_fn(E, costheta),
+				P,
+				np.linspace(-1, 1, 100000))
+			phonon_imfp[i] = 2*np.pi * _phonon_imfp
+			phonon_icdf[i,:] = _phonon_icdf
+			
+			_mott_imfp, _mott_icdf = compute_tcs_icdf(
+				lambda costheta : mott_cs_fn(E, costheta),
+				P,
+				np.linspace(-1, 1, 100000))
+			mott_imfp[i] = 2*np.pi * _mott_imfp
+			mott_icdf[i,:] = _mott_icdf
 
 		# 2pi from integral over solid angle (dOmega = sintheta dtheta dphi)
 		# integral from -1 to 1 because change of variables which also absorbs the sin term
@@ -76,12 +116,24 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 		print('.', end='', flush=True)
 	print()
 
-	group = outfile.create_group("/kieft/elastic")
-	group.add_scale("energy", K, 'eV')
-	group.add_dataset("imfp", imfp, ("energy",), 'nm^-1')
-	group.add_dataset("costheta_icdf", icdf, ("energy", None), '')
-	group.add_dataset("tl", tl, ("energy",), 'nm')
+	if separate:
+		group_elastic = outfile.create_group("/kieft/elastic")
+		group_elastic.add_scale("energy", K, 'eV')
+		group_elastic.add_dataset("imfp", mott_imfp, ("energy",), 'nm^-1')
+		group_elastic.add_dataset("costheta_icdf", mott_icdf, ("energy", None), '')
+		#group.add_dataset("tl", tl, ("energy",), 'nm')
+		group_quasi_elastic = outfile.create_group("/kieft/quasi_elastic")
+		group_quasi_elastic.add_scale("energy", K, 'eV')
+		group_quasi_elastic.add_dataset("imfp", phonon_imfp, ("energy",), 'nm^-1')
+		group_quasi_elastic.add_dataset("costheta_icdf", phonon_icdf, ("energy", None), '')
+	else:
+		group = outfile.create_group("/kieft/elastic")
+		group.add_scale("energy", K, 'eV')
+		group.add_dataset("imfp", imfp, ("energy",), 'nm^-1')
+		group.add_dataset("costheta_icdf", icdf, ("energy", None), '')
+		group.add_dataset("tl", tl, ("energy",), 'nm')
 
+	
 
 def compile_kieft_inelastic(outfile, material_params, K, P):
 	"""
@@ -267,8 +319,9 @@ def main():
 		# Kieft elastic
 		compile_kieft_elastic(outfile, s,
 			np.geomspace(1, max_energy.to(units.eV).magnitude, 128) * units.eV,
-			np.linspace(0.0, 1.0, 512))
+			np.linspace(0.0, 1.0, 512), separate=True)
 
+		"""
 		# Kieft inelastic
 		compile_kieft_inelastic(outfile, s,
 			np.geomspace(
@@ -276,6 +329,7 @@ def main():
 				max_energy.to(units.eV).magnitude,
 				128) * units.eV,
 			np.linspace(0.0, 1.0, 512))
+		"""
 
 		# Kieft ionization
 		compile_kieft_ionization(outfile, s,

@@ -136,8 +136,15 @@ def compile_full_imfp_icdf(elf_omega, elf_q, elf_data,
 	inel_q_2dicdf = np.zeros((K.shape[0], n_omega_q, P_q.shape[0])) * q_units
 
 	for i, E in enumerate(K):
+
+		# MFP Modifications
+		factor = 1             # This is the factor on the CROSS SECTIONS.
+		modified_dcs_data = np.copy(dcs_data[eval_omega<E-F,:])
+		if E.magnitude <= 100:
+			modified_dcs_data *= factor
+
 		tcs, sp, omega_icdf, q_2dicdf = tcs_2dicdf(
-			dcs_data[eval_omega<E-F,:],
+			modified_dcs_data,
 			eval_omega[eval_omega < E-F], eval_q,
 			lambda omega : q_k(E) - q_k(np.maximum(0*units.eV, E-omega)),
 			lambda omega : q_k(E) + q_k(np.maximum(0*units.eV, E-omega)),
