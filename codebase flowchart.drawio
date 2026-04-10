@@ -1,0 +1,92 @@
+<mxfile host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36">
+  <diagram name="Page-1" id="b520641d-4fe3-3701-9064-5fc419738815">
+    <mxGraphModel dx="668" dy="973" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-1" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=36;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;main() (cstool.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="250" width="340" x="1130" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-2" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Prepare .mat file using the .yaml material file values. effective_A is the atomic mass. If the material is an insulator or semiconductor, a bandgap is also included.&amp;nbsp;&amp;nbsp;" vertex="1">
+          <mxGeometry height="54" width="340" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-3" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Compile Kieft elastic model quantities and write to file" vertex="1">
+          <mxGeometry height="30" width="340" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-4" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Compile Kieft inelastic model quantities and write to file" vertex="1">
+          <mxGeometry height="30" width="340" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-6" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Compile ionization related quantities for Kieft&#39;s model and write to file" vertex="1">
+          <mxGeometry height="40" width="340" y="150" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-7" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Compile full penn algorithm quantities and write to file" vertex="1">
+          <mxGeometry height="30" width="340" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-8" parent="-oqlcNwUEFXQknIDOiFe-1" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Compile ionization related quantities and write to file&amp;nbsp;" vertex="1">
+          <mxGeometry height="30" width="340" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-9" parent="1" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=2;fontFamily=Verdana;fontSize=12;align=center;shape=mxgraph.ios7ui.horLines;" value="Material .mat file" vertex="1">
+          <mxGeometry height="50" width="135" x="1232.5" y="416" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-12" parent="1" style="html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=2;fontFamily=Verdana;fontSize=12;align=center;shape=mxgraph.ios7ui.horLines;" value="Material .yaml text file" vertex="1">
+          <mxGeometry height="50" width="187.5" x="1206.25" y="36" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-13" edge="1" parent="1" style="edgeStyle=none;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="-oqlcNwUEFXQknIDOiFe-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1300" y="86" as="sourcePoint" />
+            <mxPoint x="1490" y="-4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-14" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-8" style="html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;entryX=0.5;entryY=0.003;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.499;exitY=1.013;exitDx=0;exitDy=0;exitPerimeter=0;" target="-oqlcNwUEFXQknIDOiFe-9">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1550" y="510" as="sourcePoint" />
+            <mxPoint x="1550" y="446" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-15" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;compile_kieft_elastic (cstool.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="200" width="290" x="1590" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-16" parent="-oqlcNwUEFXQknIDOiFe-15" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Prepare Mott DIMFP tables" vertex="1">
+          <mxGeometry height="26" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-17" parent="-oqlcNwUEFXQknIDOiFe-15" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the inverse mean free path and the inverse cumulative distribution function. Store the values." vertex="1">
+          <mxGeometry height="64" width="290" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-18" parent="-oqlcNwUEFXQknIDOiFe-15" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the transport length." vertex="1">
+          <mxGeometry height="40" width="290" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-19" parent="-oqlcNwUEFXQknIDOiFe-15" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Write the electron energies, IMFP, ICDF and transport lengths to the .mat material file." vertex="1">
+          <mxGeometry height="40" width="290" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-20" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-3" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=0.006;entryY=0.078;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryDx=0;entryDy=0;entryPerimeter=0;" target="-oqlcNwUEFXQknIDOiFe-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="1700" y="457" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-21" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-17" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;entryX=-0.003;entryY=0.081;entryDx=0;entryDy=0;entryPerimeter=0;" target="-oqlcNwUEFXQknIDOiFe-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="1630" y="445" as="sourcePoint" />
+            <mxPoint x="1990" y="56" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-22" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;compute_tcs_icdf (icdf_compile.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="200" width="290" x="1960" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-23" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Prepare Mott DIMFP tables" vertex="1">
+          <mxGeometry height="26" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-24" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the inverse mean free path and the inverse cumulative distribution function. Store the values." vertex="1">
+          <mxGeometry height="64" width="290" y="56" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-25" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the transport length." vertex="1">
+          <mxGeometry height="40" width="290" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-26" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Write the electron energies, IMFP, ICDF and transport lengths to the .mat material file." vertex="1">
+          <mxGeometry height="40" width="290" y="160" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
