@@ -1,6 +1,6 @@
 <mxfile host="app.diagrams.net" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36">
   <diagram name="Page-1" id="b520641d-4fe3-3701-9064-5fc419738815">
-    <mxGraphModel dx="668" dy="973" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+    <mxGraphModel dx="130" dy="677" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -72,19 +72,74 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="-oqlcNwUEFXQknIDOiFe-22" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;compute_tcs_icdf (icdf_compile.py)&lt;/b&gt;" vertex="1">
-          <mxGeometry height="200" width="290" x="1960" y="20" as="geometry" />
+          <mxGeometry height="200" width="290" x="1960" y="110" as="geometry" />
         </mxCell>
-        <mxCell id="-oqlcNwUEFXQknIDOiFe-23" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Prepare Mott DIMFP tables" vertex="1">
-          <mxGeometry height="26" width="290" y="30" as="geometry" />
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-25" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Evaluate input functions f(x) at the points eval_x" vertex="1">
+          <mxGeometry height="30" width="290" y="30" as="geometry" />
         </mxCell>
-        <mxCell id="-oqlcNwUEFXQknIDOiFe-24" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the inverse mean free path and the inverse cumulative distribution function. Store the values." vertex="1">
-          <mxGeometry height="64" width="290" y="56" as="geometry" />
+        <mxCell id="-oqlcNwUEFXQknIDOiFe-26" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="&lt;div&gt;- Construct the cumulative distribution function from the evaluated function f(x)&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" y="60" as="geometry" />
         </mxCell>
-        <mxCell id="-oqlcNwUEFXQknIDOiFe-25" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- For each energy in a specified range of electron energies, calculate the transport length." vertex="1">
-          <mxGeometry height="40" width="290" y="120" as="geometry" />
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-16" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- If the function f(x) evaluates as 0, output an imfp of 0 and an empty icdf.&amp;nbsp;" vertex="1">
+          <mxGeometry height="40" width="290" y="100" as="geometry" />
         </mxCell>
-        <mxCell id="-oqlcNwUEFXQknIDOiFe-26" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- Write the electron energies, IMFP, ICDF and transport lengths to the .mat material file." vertex="1">
-          <mxGeometry height="40" width="290" y="160" as="geometry" />
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-17" parent="-oqlcNwUEFXQknIDOiFe-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="- If not, output the last value of the cdf as the imfp, and invert the cdf and output that as the icdf." vertex="1">
+          <mxGeometry height="40" width="290" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-1" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-16" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" target="4WJMDAqJ3G2pNCMrdmmO-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="2370" y="182" as="sourcePoint" />
+            <mxPoint x="2310" y="40" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-2" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;mott_dimfp (mott.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="80" width="290" x="1960" y="21" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-6" parent="4WJMDAqJ3G2pNCMrdmmO-2" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="&lt;div&gt;...&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-10" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;compute_tcs (icdf_compile.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="110" width="290" x="1910" y="425" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-11" parent="4WJMDAqJ3G2pNCMrdmmO-10" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="&lt;div&gt;...&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-12" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-18" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.182;entryDx=0;entryDy=0;entryPerimeter=0;" target="4WJMDAqJ3G2pNCMrdmmO-10">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="2270" y="220" as="sourcePoint" />
+            <mxPoint x="2320" y="260" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-18" edge="1" parent="1" source="4WJMDAqJ3G2pNCMrdmmO-17" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;entryX=-0.004;entryY=0.157;entryDx=0;entryDy=0;entryPerimeter=0;" target="4WJMDAqJ3G2pNCMrdmmO-22">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="2290" y="270" />
+              <mxPoint x="2290" y="157" />
+            </Array>
+            <mxPoint x="2270" y="270" as="sourcePoint" />
+            <mxPoint x="2350" y="230" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-19" edge="1" parent="1" source="-oqlcNwUEFXQknIDOiFe-26" style="edgeStyle=orthogonalEdgeStyle;html=1;labelBackgroundColor=none;startFill=0;startSize=8;endFill=1;endSize=8;fontFamily=Verdana;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=-0.001;entryY=0.18;entryDx=0;entryDy=0;entryPerimeter=0;" target="4WJMDAqJ3G2pNCMrdmmO-20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+            <mxPoint x="2250" y="190" as="sourcePoint" />
+            <mxPoint x="2350" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-20" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;cumulative_trapezoid (?)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="110" width="290" x="2320" y="21" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-21" parent="4WJMDAqJ3G2pNCMrdmmO-20" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="&lt;div&gt;...&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-22" parent="1" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=12" value="&lt;b&gt;icdf (icdf_compile.py)&lt;/b&gt;" vertex="1">
+          <mxGeometry height="110" width="290" x="2320" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="4WJMDAqJ3G2pNCMrdmmO-23" parent="4WJMDAqJ3G2pNCMrdmmO-22" style="text;html=1;strokeColor=none;fillColor=none;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" value="&lt;div&gt;...&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="290" y="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
