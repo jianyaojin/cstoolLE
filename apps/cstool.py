@@ -66,6 +66,7 @@ def compile_kieft_elastic(outfile, material_params, K, P, separate=False):
 
 	print("# Computing elastic total cross-sections and iCDFs.")
 	# Create container for imfp icdf and tl
+	# We also create containers for pdf and cdf, which can also optionally be written to file.
 	imfp = np.zeros(K.shape) * units('nm^-1')
 	icdf = np.zeros((K.shape[0], P.shape[0])) * units.dimensionless
 	pdf = np.zeros((K.shape[0], 100000)) * units.dimensionless
@@ -132,23 +133,23 @@ def compile_kieft_elastic(outfile, material_params, K, P, separate=False):
 		group_elastic.add_scale("energy", K, 'eV')
 		group_elastic.add_dataset("imfp", mott_imfp, ("energy",), 'nm^-1')
 		group_elastic.add_dataset("costheta_icdf", mott_icdf, ("energy", None), '')
-		group_elastic.add_dataset("pdf", mott_pdf, ("energy", None), '')
-		group_elastic.add_dataset("cdf", mott_cdf, ("energy", None),'')
+		#group_elastic.add_dataset("pdf", mott_pdf, ("energy", None), '')
+		#group_elastic.add_dataset("cdf", mott_cdf, ("energy", None),'')
 		#group.add_dataset("tl", tl, ("energy",), 'nm')
 		group_quasi_elastic = outfile.create_group("/kieft/quasi_elastic")
 		group_quasi_elastic.add_scale("energy", K, 'eV')
 		group_quasi_elastic.add_dataset("imfp", phonon_imfp, ("energy",), 'nm^-1')
 		group_quasi_elastic.add_dataset("costheta_icdf", phonon_icdf, ("energy", None), '')
-		group_quasi_elastic.add_dataset("pdf", phonon_pdf, ("energy", None), '')
-		group_quasi_elastic.add_dataset("cdf", phonon_cdf, ("energy", None),'')
+		#group_quasi_elastic.add_dataset("pdf", phonon_pdf, ("energy", None), '')
+		#group_quasi_elastic.add_dataset("cdf", phonon_cdf, ("energy", None),'')
 	else:
 		group = outfile.create_group("/kieft/elastic")
 		group.add_scale("energy", K, 'eV')
 		group.add_dataset("imfp", imfp, ("energy",), 'nm^-1')
 		group.add_dataset("costheta_icdf", icdf, ("energy", None), '')
 		group.add_dataset("tl", tl, ("energy",), 'nm')
-		group.add_dataset("pdf", pdf, ("energy", None), '')
-		group.add_dataset("cdf", cdf, ("energy", None), '')
+		#group.add_dataset("pdf", pdf, ("energy", None), '')
+		#group.add_dataset("cdf", cdf, ("energy", None), '')
 
 	
 
@@ -346,12 +347,12 @@ def main():
 				max_energy.to(units.eV).magnitude,
 				128) * units.eV,
 			np.linspace(0.0, 1.0, 512))
-		"""
 
 		# Kieft ionization
 		compile_kieft_ionization(outfile, s,
 			np.geomspace(1, max_energy.to(units.eV).magnitude, 1024) * units.eV,
 			np.linspace(0.0, 1.0, 1024))
+		"""
 
 		# Full Penn
 		compile_full_penn(outfile, s,
