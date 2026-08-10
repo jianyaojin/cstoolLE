@@ -31,12 +31,14 @@ def compute_tcs_icdf(f, P, eval_x):
 	"""
 	eval_x *= units.dimensionless
 	y = f(eval_x) * units.dimensionless
-
+	# This is an array of length 100000, where the first value is 0 and the last value is 
+	# the total cross section (for a given electron energy). Note that each value of cf
+	# corresponds to a theta value (since the costheta array is also length 100000)
 	cf = np.r_[0, cumulative_trapezoid(y.magnitude, eval_x.magnitude)] * y.units*eval_x.units
-
+	
 	if cf[-1] <= 0*cf.units:
-		return 0*cf.units, np.zeros_like(P) * eval_x.units
-	return cf[-1], icdf(eval_x, cf/cf[-1], P)
+		return 0*cf.units, np.zeros_like(P) * eval_x.units, np.zeros(100000)*eval_x.units, np.zeros(100000)*cf.units
+	return cf[-1], icdf(eval_x, cf/cf[-1], P), y, cf
 
 def compute_tcs(f, eval_x):
 	"""Compute the integrated cross section for the one-dimensional differential
