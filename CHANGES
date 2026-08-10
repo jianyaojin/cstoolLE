@@ -1,5 +1,10 @@
 cstool changelog
 
+1.1.0 (2026-10-08)
+  - Added min excitation to quantities written to .mat file
+  - Separated phonon and Mott scattering mfps, costhetas etc, for use in a separated elastic scattering channel version of Nebula.
+  - Added function documentation to several functions
+
 1.0.7 (2024-08-21)
   - Update deprecated dependencies
 

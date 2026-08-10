@@ -85,8 +85,6 @@ def compile_kieft_elastic(outfile, material_params, K, P, separate=False):
 	def mott_cs_fn(E, costheta):
 		return mott_fn(E, costheta)
 
-
-
 	print("# Computing elastic total cross-sections and iCDFs.")
 	# Create container for imfp icdf and tl
 	# We also create containers for pdf and cdf, which can also optionally be written to file.
