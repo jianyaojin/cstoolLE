@@ -152,14 +152,14 @@ def compile_kieft_elastic(outfile, material_params, K, P, separate=False):
 	print()
 
 	if separate:
-		group_elastic = outfile.create_group("/kieft/elastic")
+		group_elastic = outfile.create_group("/elastic")
 		group_elastic.add_scale("energy", K, 'eV')
 		group_elastic.add_dataset("imfp", mott_imfp, ("energy",), 'nm^-1')
 		group_elastic.add_dataset("costheta_icdf", mott_icdf, ("energy", None), '')
 		#group_elastic.add_dataset("pdf", mott_pdf, ("energy", None), '')
 		#group_elastic.add_dataset("cdf", mott_cdf, ("energy", None),'')
 		#group.add_dataset("tl", tl, ("energy",), 'nm')
-		group_quasi_elastic = outfile.create_group("/kieft/quasi_elastic")
+		group_quasi_elastic = outfile.create_group("/quasi_elastic")
 		group_quasi_elastic.add_scale("energy", K, 'eV')
 		group_quasi_elastic.add_dataset("imfp", phonon_imfp, ("energy",), 'nm^-1')
 		group_quasi_elastic.add_dataset("costheta_icdf", phonon_icdf, ("energy", None), '')
