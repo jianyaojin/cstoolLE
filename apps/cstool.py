@@ -1,6 +1,7 @@
 import cstool as cst
 import numpy as np
 import argparse
+from matplotlib import pyplot as plt
 from cstool.input_data import param_file
 from cstool.mott import mott_dimfp
 from cstool.phonon import ac_phonon_dimfp, ac_phonon_loss
@@ -46,13 +47,35 @@ def compile_kieft_elastic(outfile, material_params, K, P):
 	"""
 	print("# Computing Mott cross-sections using ELSEPA.")
 	mott_fn = mott_dimfp(material_params, K[K>10*units.eV], threads=4)
+	
+	def plot_mott_dimfp_table(table):
+		E = table.energy.to("eV").magnitude
+		costheta = table.q.magnitude
+		Z = table.dimfp.to("1/nm/sr").magnitude
 
+		plt.figure(figsize=(8, 5))
+		mesh = plt.pcolormesh(
+			costheta,
+			E,
+			np.log10(np.maximum(Z, 1e-300)),
+			shading="auto"
+		)
+		plt.colorbar(mesh, label="log10(DIMFP / nm^-1 sr^-1)")
+		plt.xlabel(r"$\cos\theta$")
+		plt.ylabel("Energy [eV]")
+		plt.yscale("log")
+		plt.title("Mott differential inverse mean free path")
+		plt.tight_layout()
+		plt.savefig("hybrid_dimfp.png")
+	
 	def elastic_cs_fn(E, costheta):
 		return interpolate_f(
 			lambda E: ac_phonon_dimfp(material_params)(E, costheta),
 			lambda E: mott_fn(E, costheta),
 			100*units.eV, 200*units.eV
 		)(E)
+
+
 
 	print("# Computing elastic total cross-sections and iCDFs.")
 	imfp = np.zeros(K.shape) * units('nm^-1')
@@ -260,6 +283,7 @@ def main():
 				sum(e.M * e.count for e in s.elements) /
 				(units.N_A*sum(e.count for e in s.elements)),
 			'g')
+		outfile.set_property('min_excitation', s.band_structure.get_min_excitation(), 'eV')
 		if s.band_structure.model == 'insulator' or s.band_structure.model == 'semiconductor':
 			outfile.set_property('band_gap', s.band_structure.band_gap, 'eV')
 
@@ -268,7 +292,7 @@ def main():
 		compile_kieft_elastic(outfile, s,
 			np.geomspace(1, max_energy.to(units.eV).magnitude, 128) * units.eV,
 			np.linspace(0.0, 1.0, 512))
-
+		"""
 		# Kieft inelastic
 		compile_kieft_inelastic(outfile, s,
 			np.geomspace(
@@ -281,7 +305,7 @@ def main():
 		compile_kieft_ionization(outfile, s,
 			np.geomspace(1, max_energy.to(units.eV).magnitude, 1024) * units.eV,
 			np.linspace(0.0, 1.0, 1024))
-
+		"""
 		# Full Penn
 		compile_full_penn(outfile, s,
 			np.geomspace(
