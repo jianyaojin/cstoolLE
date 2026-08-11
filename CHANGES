@@ -1,5 +1,8 @@
 cstool changelog
 
+1.1.1 (2026-11-08)
+  - Fix pkg_resources dependency (deprecated), replaced with importlib, atexit and contextlib implementation
+
 1.1.0 (2026-10-08)
   - Added min excitation to quantities written to .mat file
   - Separated phonon and Mott scattering mfps, costhetas etc, for use in a separated elastic scattering channel version of Nebula.

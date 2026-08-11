@@ -1,8 +1,20 @@
 from distutils.core import setup
+from pathlib import Path
+import re
 
+# This bit of code reads the current cstool __version__ from cstool/__init__.py
+# Saves a bit of time having to update both version numbers.
+init_text = Path("cstool/__init__.py").read_text(encoding="utf-8")
+version_number = re.search(
+    r'^__version__\s*=\s*["\']([^"\']+)["\']',
+    init_text,
+    re.MULTILINE,
+).group(1)
+
+# Actual setup
 setup(
 	name = 'cstool',
-	version = '1.1.0',
+	version = version_number,
 	description = 'Computes cross sections for the Nebula simulator',
 	packages = ['cstool',
 		'cstool.common', 'cstool.dielectric_function', 'cstool.endf',
